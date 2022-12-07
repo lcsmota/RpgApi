@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace RpgApi.Models;
 
 public class Character
@@ -9,5 +11,7 @@ public class Character
     public double Weight { get; set; }
 
     public int RpgClassId { get; set; }
+
+    [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
     public RpgClass RpgClass { get; set; }
 }
