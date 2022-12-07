@@ -36,12 +36,12 @@ public class RPGDbContext : DbContext
 
             entity.Property(e => e.Height)
                 .HasColumnName("Height")
-                .HasColumnType("")
+                .HasColumnType("real")
                 .IsRequired();
 
             entity.Property(e => e.Weight)
                 .HasColumnName("Weight")
-                .HasColumnType("")
+                .HasColumnType("real")
                 .IsRequired();
 
             entity.HasOne(e => e.RpgClass)
