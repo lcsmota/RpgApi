@@ -6,7 +6,7 @@ using RpgApi.Models;
 namespace RpgApi.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/v1/[controller]")]
 public class CharactersController : ControllerBase
 {
     private readonly IUnitOfWork _unitOfWork;
