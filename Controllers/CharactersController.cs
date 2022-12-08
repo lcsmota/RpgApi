@@ -124,4 +124,38 @@ public class CharactersController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
     }
+
+
+
+    [HttpGet("withclass")]
+    public async Task<ActionResult> GetCharactersWithClassAsync()
+    {
+        try
+        {
+            var characters = await _unitOfWork.CharactersRepository.GetCharactersWithClassAsync();
+
+            return Ok(characters);
+        }
+        catch (System.Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
+
+    [HttpGet("{id:int}/withclass")]
+    public async Task<ActionResult> GetCharacterByIdWithClassAsync(int id)
+    {
+        try
+        {
+            var character = await _unitOfWork.CharactersRepository.GetCharacterByIdWithClassAsync(id);
+
+            if (character is null) return NotFound("Character not found.");
+
+            return Ok(character);
+        }
+        catch (System.Exception ex)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+    }
 }

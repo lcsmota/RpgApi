@@ -10,4 +10,7 @@ public interface ICharacterRepository
     Task AddCharacterAsync(Character character);
     void UpdateCharacter(Character character);
     void DeleteCharacter(Character character);
+
+    Task<IEnumerable<Character>> GetCharactersWithClassAsync();
+    Task<Character> GetCharacterByIdWithClassAsync(int id);
 }

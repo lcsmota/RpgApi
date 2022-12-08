@@ -41,4 +41,20 @@ public class CharacterRepository : ICharacterRepository
         _rpgDbContext.Entry(character).State = EntityState.Modified;
         _rpgDbContext.Update(character);
     }
+
+    public async Task<IEnumerable<Character>> GetCharactersWithClassAsync()
+    {
+        return await _rpgDbContext.Characters
+                                  .Include(e => e.RpgClass)
+                                  .AsNoTracking()
+                                  .ToListAsync();
+    }
+
+    public async Task<Character> GetCharacterByIdWithClassAsync(int id)
+    {
+        return await _rpgDbContext.Characters
+                                  .Include(e => e.RpgClass)
+                                  .AsNoTracking()
+                                  .FirstOrDefaultAsync(prop => prop.Id == id);
+    }
 }
