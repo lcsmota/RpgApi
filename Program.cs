@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using RpgApi.Context;
 using RpgApi.Interfaces;
 using RpgApi.Repository;
@@ -13,7 +14,13 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddControllers();
 
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    builder.Services.AddSwaggerGen(sw =>
+        sw.SwaggerDoc("v1", new OpenApiInfo
+        {
+            Title = "RPG Api",
+            Version = "v1",
+            Description = "Simple CRUD using Entity Framework 7"
+        }));
 }
 
 var app = builder.Build();
