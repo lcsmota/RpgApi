@@ -21,6 +21,8 @@ var builder = WebApplication.CreateBuilder(args);
             Version = "v1",
             Description = "Simple CRUD using Entity Framework 7"
         }));
+
+    builder.Services.AddCors();
 }
 
 var app = builder.Build();
@@ -32,6 +34,11 @@ var app = builder.Build();
     }
 
     app.UseHttpsRedirection();
+
+    app.UseCors(e => e
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader());
 
     app.UseAuthorization();
 
