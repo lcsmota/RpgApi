@@ -10,6 +10,7 @@ public class RPGDbContext : DbContext
 
     public DbSet<Character> Characters { get; set; }
     public DbSet<RpgClass> RpgClasses { get; set; }
+    public DbSet<User> Users { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -77,6 +78,36 @@ public class RPGDbContext : DbContext
             //     .HasConstraintName("FK_RPGClass_Character")
             //     .HasForeignKey(key => key.Id)
             //     .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.ToTable("Users");
+
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .UseIdentityColumn()
+                .IsRequired();
+
+            entity.Property(e => e.Login)
+                .HasColumnName("Login")
+                .HasColumnType("nvarchar(80)")
+                .IsRequired();
+
+            entity.Property(e => e.Password)
+                .HasColumnName("Password")
+                .HasColumnType("nvarchar(255)")
+                .IsRequired();
+
+            entity.Property(e => e.Role)
+                .HasColumnName("Role")
+                .HasColumnType("nvarchar(20)");
+
+            entity.HasData(
+                new User { Id = 1, Login = "juca", Password = "juca123!@#", Role = "standard" }
+            );
         });
     }
 }
