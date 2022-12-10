@@ -1,6 +1,10 @@
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RpgApi;
 using RpgApi.Context;
 using RpgApi.Interfaces;
 using RpgApi.Repository;
@@ -24,6 +28,24 @@ var builder = WebApplication.CreateBuilder(args);
             Description = "Simple CRUD using Entity Framework 7"
         }));
 
+    var key = Encoding.ASCII.GetBytes(KeyToken.Secret);
+    builder.Services.AddAuthentication(opt =>
+    {
+        opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    }).AddJwtBearer(op =>
+    {
+        op.RequireHttpsMetadata = false;
+        op.SaveToken = true;
+        op.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false
+        };
+    });
+
     builder.Services.AddCors();
 }
 
@@ -41,6 +63,8 @@ var app = builder.Build();
         .AllowAnyOrigin()
         .AllowAnyMethod()
         .AllowAnyHeader());
+
+    app.UseAuthentication();
 
     app.UseAuthorization();
 
