@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RpgApi.Interfaces;
 
@@ -14,6 +15,7 @@ public class RPGClassesController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult> GetClassesAsync()
     {
         try
@@ -29,6 +31,7 @@ public class RPGClassesController : ControllerBase
     }
 
     [HttpGet("{id:int}")]
+    [AllowAnonymous]
     public async Task<ActionResult> GetClasseByIdAsync(int id)
     {
         try

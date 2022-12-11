@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RpgApi.DTOs;
 using RpgApi.Interfaces;
@@ -16,6 +17,7 @@ public class CharactersController : ControllerBase
     }
 
     [HttpGet]
+    [AllowAnonymous]
     public async Task<ActionResult> GetCharactersAsync()
     {
         try
@@ -31,6 +33,7 @@ public class CharactersController : ControllerBase
     }
 
     [HttpGet("{id:int}", Name = "GetCharacterById")]
+    [AllowAnonymous]
     public async Task<ActionResult> GetCharacterAsync(int id)
     {
         try
@@ -48,6 +51,7 @@ public class CharactersController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "standard, admin")]
     public async Task<ActionResult> AddCharacterAsync(CharacterForCreationDTO character)
     {
         try
@@ -76,6 +80,7 @@ public class CharactersController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles = "admin")]
     public async Task<ActionResult> UpdateCharacterAsync(int id, CharacterForUpdateDTO character)
     {
         try
@@ -105,6 +110,7 @@ public class CharactersController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "admin")]
     public async Task<ActionResult> DeleteCharacterAsync(int id)
     {
         try
@@ -128,6 +134,7 @@ public class CharactersController : ControllerBase
 
 
     [HttpGet("withclass")]
+    [Authorize(Roles = "standard, admin")]
     public async Task<ActionResult> GetCharactersWithClassAsync()
     {
         try
@@ -143,6 +150,7 @@ public class CharactersController : ControllerBase
     }
 
     [HttpGet("{id:int}/withclass")]
+    [Authorize(Roles = "standard, admin")]
     public async Task<ActionResult> GetCharacterByIdWithClassAsync(int id)
     {
         try
