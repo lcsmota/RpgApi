@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RpgApi.Interfaces;
 using RpgApi.Models;
@@ -16,6 +17,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost("login")]
+    [AllowAnonymous]
     public async Task<ActionResult<dynamic>> AuthenticateAsync(User user)
     {
         var us = await _unitOfWork.UsersRepository.AuthenticateAsync(user);
@@ -34,6 +36,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "admin")]
     public async Task<ActionResult> GetUsersAsync()
     {
         try
@@ -49,6 +52,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{id:int}", Name = "GetUserById")]
+    [Authorize(Roles = "admin")]
     public async Task<ActionResult> GetUserAsync(int id)
     {
         try
@@ -66,6 +70,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPost]
+    [AllowAnonymous]
     public async Task<ActionResult> CreateUserAsync(User user)
     {
         try
@@ -87,6 +92,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPut("{id:int}")]
+    [Authorize(Roles = "admin")]
     public async Task<ActionResult> UpdateUserAsync(int id, User user)
     {
         try
@@ -111,6 +117,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize(Roles = "admin")]
     public async Task<ActionResult> DeleteUserAsync(int id)
     {
         try
