@@ -42,6 +42,25 @@ var builder = WebApplication.CreateBuilder(args);
             BearerFormat = "JWT"
         });
 
+        sw.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    },
+
+                    Scheme = "oathuh2",
+                    Name = "Bearer",
+                    In = ParameterLocation.Header
+                },
+
+                new List<string>()
+            }
+        });
     });
 
     var key = Encoding.ASCII.GetBytes(KeyToken.Secret);
