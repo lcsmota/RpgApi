@@ -9,4 +9,6 @@ public interface IUserRepository
     Task AddUserAsync(User user);
     void UpdateUser(User user);
     void DeleteUser(User user);
+
+    Task<User> AuthenticateAsync(User user);
 }

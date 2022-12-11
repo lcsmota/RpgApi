@@ -38,4 +38,13 @@ public class UserRepository : IUserRepository
         _context.Entry(user).State = EntityState.Modified;
         _context.Update(user);
     }
+
+    public async Task<User> AuthenticateAsync(User user)
+    {
+        var usr = await _context.Users
+                      .AsNoTracking()
+                      .Where(p => p.Login == user.Login && p.Password == user.Password)
+                      .FirstOrDefaultAsync();
+        return usr;
+    }
 }
